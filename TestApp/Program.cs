@@ -1,50 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using first;
-using second;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
-delegate int getMyValue();
-namespace TestApp
+class Program
 {
 
-    public class Lion
+    /// <summary>
+    /// Compares if 2 IEnumerable have the same values
+    /// </summary>
+    internal class EnumerableComparer : IEqualityComparer<IEnumerable<string>>
     {
-        public int IValue { get; set; }
-        public Lion()
+        public bool Equals(IEnumerable<string> x, IEnumerable<string> y)
         {
-            IValue = 5;
+            return (x.Count() == y.Count() && (!x.Except(y).Any() || !y.Except(x).Any()));
         }
 
-        public int printIValue()
+        public int GetHashCode(IEnumerable<string> obj)
         {
-            Console.WriteLine(IValue + " value has been printed");
-            Thread.Sleep(100);
-            return 123;
+            return obj.Count();
         }
-
     }
-    class Program
+
+    public static void Main1()
     {
-        public unsafe static void Main()
+        Console.WriteLine("Executing ");
+        RunAsync();
+        Console.WriteLine("Completed Await");
+        Console.Read();
+    }
+
+    public static async Task RunAsync()
+    {
+        Console.WriteLine("Executing RunAsync");
+        await Task.Run(() => WaitForInt());
+        Thread.Sleep(100);
+        Console.WriteLine("Completed Await RunAsync");
+    }
+
+    public static async Task<int> WaitForInt()
+    {
+        Console.WriteLine("Wait for Int Call");
+        for (int i = 0; i < 10; i++)
         {
-            Thread myThread = new Thread(delegate ()
-            {
-                Thread.Sleep(50);
-                Console.WriteLine("myThread Called");
-                Console.ReadKey();
-            });
-
-            myThread.Start();
-            Console.WriteLine("Hi");
-
-            getMyValue getMyObj = new getMyValue(new Lion().printIValue);
-            Console.WriteLine(getMyObj.BeginInvoke(delegate(System.IAsyncResult ar)
-            {
-                Console.WriteLine("Callback invoked!!");
-             //   Func<int> myFunc = ar.AsyncState as Func<int>;
-              //  Console.WriteLine(  myFunc.EndInvoke(ar) + " Result found after callback");
-            }, null) + " After Being Invoke");
+            Console.WriteLine();
+            Thread.Sleep(100);
         }
+
+        Console.WriteLine("Completed Wait Call");
+        return 1;
     }
 }
+    
