@@ -24,12 +24,33 @@ class Program
         }
     }
 
+    public class IntHolder
+    {
+        public IntHolder(int value)
+        {
+            this.Value = value;
+        }
+        public int Value;
+    }
+
     public static void Main1()
     {
         Console.WriteLine("Executing ");
-        RunAsync();
+        var first = new IntHolder(0);
+        var second = new IntHolder(1);
+        Swap(first, second);
+        Console.WriteLine(first.Value);
+        Console.WriteLine(second.Value);
+        // RunAsync();
         Console.WriteLine("Completed Await");
-        Console.Read();
+        Console.ReadKey();
+    }
+
+    public static void Swap(IntHolder a, IntHolder b)
+    {
+        IntHolder temp = a;
+        a = b;
+        b = temp;
     }
 
     public static async Task RunAsync()

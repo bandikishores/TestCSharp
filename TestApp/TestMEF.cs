@@ -7,6 +7,13 @@ using System.ComponentModel.Composition.Hosting;
 
 interface IAnimal { void Eat(); }
 
+public enum SourceEnum
+{
+    PERSONAL_DATA_EXTRACTION,
+    SWSS,
+    OTHER
+}
+
 //Concrete animal 1
 [Export(typeof(IAnimal))]
 class Lion : IAnimal
@@ -68,6 +75,7 @@ class TestMEF
         var container = new CompositionContainer(catalog);
 
         container.GetExportedValue<IDummy>().Print();
+
         /*
         //Compose the zoo.
         var zoo = new Zoo();

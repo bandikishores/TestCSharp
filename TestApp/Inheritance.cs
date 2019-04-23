@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+using System.Runtime.CompilerServices;
 using first;
 using second;
 using System.Threading;
@@ -61,8 +63,14 @@ namespace TestApp
 
     class Inheritance
     {
-        public unsafe static void Main()
+        private DateTime StartTime { get; } = DateTime.Now;
+
+        public unsafe static void Main2()
         {
+            AsyncMethod();
+            Console.ReadKey();
+
+            if (true) return;
             /*
             List<int> intList = new List<int>();
             intList.Add(1);
@@ -144,6 +152,24 @@ namespace TestApp
             Console.WriteLine("Called TestAsync " + Thread.CurrentThread.GetHashCode());
 
             Console.ReadKey();
+        }
+
+        private static async void AsyncMethod()
+        {
+            Thread myThread = new Thread(async delegate ()
+            {
+                Console.WriteLine("Inside Thread");
+                Thread.Sleep(50);
+                await Task.Run(async () =>
+                {
+                    Console.WriteLine("Inside Task");
+                    await Task.Delay(100);
+                    Console.WriteLine("Exiting Task");
+                });
+                Console.WriteLine("Exiting Thread");
+            });
+
+            myThread.Start();
         }
 
         public static async Task testAsync()

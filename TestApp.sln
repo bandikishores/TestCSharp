@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{618E27ED-FAA7-49F5-B38E-62C95D2B6D9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RambabuConsole", "..\RambabuConsoleApp\RambabuConsole\RambabuConsole.csproj", "{00A294EA-5605-4B4A-8552-345C7CDA718D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{618E27ED-FAA7-49F5-B38E-62C95D2B6D9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{618E27ED-FAA7-49F5-B38E-62C95D2B6D9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{618E27ED-FAA7-49F5-B38E-62C95D2B6D9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00A294EA-5605-4B4A-8552-345C7CDA718D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00A294EA-5605-4B4A-8552-345C7CDA718D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00A294EA-5605-4B4A-8552-345C7CDA718D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00A294EA-5605-4B4A-8552-345C7CDA718D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
