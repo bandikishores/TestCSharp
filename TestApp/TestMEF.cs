@@ -1,5 +1,6 @@
 ﻿//Abstract animal interface
 
+using Autofac;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -65,10 +66,47 @@ class HiDummy : IDummy
     }
 }
 
+interface MyInterface
+{
+
+}
+
+class GenericClass<T> : MyInterface
+{
+    public void print(T value)
+    {
+        Console.WriteLine("This is of type " + value.GetType());
+    }
+}
+
+class StringGeneric : GenericClass<string>
+{
+
+}
+
+class IntegerGeneric : GenericClass<int>
+{
+
+}
+
 //Let us construct our zoo and animals
 class TestMEF
 {
     static void Main1(string[] args)
+    {
+        var containerBuilder = new ContainerBuilder();
+        containerBuilder.RegisterType<StringGeneric>().AsImplementedInterfaces().SingleInstance().PreserveExistingDefaults();
+        var builtContainer = containerBuilder.Build();
+
+        GenericClass<string> genericClass = builtContainer.Resolve<MyInterface>() as GenericClass<string>;
+        genericClass.print("asdf");
+        GenericClass<int> intClass = (GenericClass<int>)builtContainer.Resolve<MyInterface>();
+        intClass.print(123);
+
+    }
+
+
+    static void Main2(string[] args)
     {
         //Let us create a catalog and a container
         var catalog = new AssemblyCatalog(typeof(TestMEF).Assembly);

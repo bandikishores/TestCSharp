@@ -39,6 +39,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,13 +49,26 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>D:\CxCache\Autofac.4.9.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="ChoETL, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>D:\CxCache\ChoETL.1.1.0.1\lib\net45\ChoETL.dll</HintPath>
     </Reference>
     <Reference Include="ChoETL.JSON, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>D:\CxCache\ChoETL.JSON.1.1.0.1\lib\net45\ChoETL.JSON.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.OData.Core, Version=7.5.4.30215, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>D:\CxCache\Microsoft.OData.Core.7.5.4\lib\portable-net45+win8+wpa81\Microsoft.OData.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.OData.Edm, Version=7.5.4.30215, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>D:\CxCache\Microsoft.OData.Edm.7.5.4\lib\portable-net45+win8+wpa81\Microsoft.OData.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Spatial, Version=7.5.4.30215, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>D:\CxCache\Microsoft.Spatial.7.5.4\lib\portable-net45+win8+wpa81\Microsoft.Spatial.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>D:\CxCache\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -99,8 +113,13 @@
     <Compile Include="ChoETL.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Inheritance.cs" />
+    <Compile Include="InMemoryMessage.cs" />
+    <Compile Include="MyString.cs" />
+    <Compile Include="ODataTest.cs" />
+    <Compile Include="SimpleNewtonsoftJsonTest.cs" />
     <Compile Include="NewtonsoftJsonTest.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="StringReference.cs" />
     <Compile Include="TestHttpClient.cs" />
     <Compile Include="TestMEF.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
