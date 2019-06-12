@@ -53,7 +53,7 @@ namespace TestApp
                 using (StreamReader sr = File.OpenText(path))
                 using (var jsonTextReader = new JsonTextReader(sr))
                 {
-
+                   // var pool = new CustomArrayPool();
                     // Checking if pooling will help with memory
                     jsonTextReader.ArrayPool = pool;
 

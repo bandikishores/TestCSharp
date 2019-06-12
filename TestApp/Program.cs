@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,8 +36,66 @@ class Program
         public int Value;
     }
 
-    public static async Task Main1()
+    public interface ITag
     {
+        void WriteTag(string tagName = "ITag");
+    }
+
+    public class BaseTag : ITag
+    {
+        public void WriteTag(string tagName = "BaseTag") { Console.WriteLine(tagName); }
+    }
+
+    public class SubTag : BaseTag
+    {
+        public void WriteTag(string tagName = "SubTag") { Console.WriteLine(tagName); }
+        // public void WriteTag(int tagName = 0) { Console.WriteLine(tagName); }
+        //public void WriteTag() { Console.WriteLine("Default"); }
+    }
+
+    public static void Test()
+    {
+        Console.WriteLine("No Param");
+    }
+
+    public static void Test(int x = 0)
+    {
+        Console.WriteLine("Test Args");
+    }
+
+    static Dictionary<string, string> myDictionary;
+
+    public static async Task Main1(string[] args)
+    {
+        Test();
+
+        Console.ReadKey();
+        if (true) return;
+        myDictionary.Add("fdg","Asdf");
+        Console.WriteLine(myDictionary.Count);
+
+        if (true) return;
+
+        ArrayPool<byte> bytePool = ArrayPool<byte>.Create(10000, 2);
+        bytePool.Rent(10000);
+        bytePool.Rent(10000);
+        bytePool.Rent(10000);
+        Console.WriteLine("Done");
+
+
+        if (true) return;
+
+        SubTag subTag = new SubTag();
+        BaseTag subByBaseTag = subTag;
+        ITag subByInterfaceTag = subTag;
+
+        subTag.WriteTag();
+        subByBaseTag.WriteTag();
+        subByInterfaceTag.WriteTag();
+
+        if (true) return;
+
+
         Console.WriteLine("Executing ");
         var firstArray = new byte[10];
         var tempArray = new byte[10];
