@@ -19,7 +19,7 @@ namespace TestApp
         {
         }
 
-        public static void Main(string[] args)
+        public static void Main1(string[] args)
         {
             Console.WriteLine("Main Program Started Thread Name " + Thread.CurrentThread.ManagedThreadId);
             Console.WriteLine("Returned Value " + AsyncFunc(null).GetAwaiter().GetResult());
