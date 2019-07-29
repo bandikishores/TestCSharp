@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using TestApp;
 
 class Program
 {
@@ -65,15 +67,45 @@ class Program
 
     static Dictionary<string, string> myDictionary;
 
+    public class RentBuffer : IDisposable
+    {
+        public void Dispose()
+        {
+            Console.WriteLine("Disposed");
+        }
+        public string GetString()
+        {
+            return "Rent Buffer String";
+        }
+    }
+
+    public class Factory
+    {
+        public RentBuffer GetRentBuffer()
+        {
+            return new RentBuffer();
+        }
+    }
+
     public static async Task Main1(string[] args)
     {
-        Test();
+        Main1(new Factory());
+    }
 
-        Console.ReadKey();
-        if (true) return;
-        myDictionary.Add("fdg","Asdf");
-        Console.WriteLine(myDictionary.Count);
-
+    public static async Task Main1(Factory factory)
+    {
+        var t = TimeSpan.Parse("10.00:00:00");
+        Console.WriteLine(t.TotalHours);
+        using (var rentBuffer = factory?.GetRentBuffer())
+        {
+            string format = rentBuffer?.GetString() ?? "No String";
+            Console.WriteLine(format);
+        }
+        if (true)
+        {
+            return;
+        }
+        
         if (true) return;
 
         ArrayPool<byte> bytePool = ArrayPool<byte>.Create(10000, 2);

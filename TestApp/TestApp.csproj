@@ -135,11 +135,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ADLSClientTest.cs" />
+    <Compile Include="AsynchronousExample2.cs" />
+    <Compile Include="AsynchronousExample1.cs" />
     <Compile Include="ChoETL.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="FixedStandardArrayPool.cs" />
     <Compile Include="Inheritance.cs" />
     <Compile Include="InMemoryMessage.cs" />
-    <Compile Include="JsonToXMLTest.cs.cs" />
+    <Compile Include="JsonToXMLTest.cs" />
     <Compile Include="MyString.cs" />
     <Compile Include="ODataTest.cs" />
     <Compile Include="SimpleNewtonsoftJsonTest.cs" />

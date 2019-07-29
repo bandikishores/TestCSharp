@@ -92,7 +92,7 @@ class IntegerGeneric : GenericClass<int>
 //Let us construct our zoo and animals
 class TestMEF
 {
-    static void Main(string[] args)
+    static void Main1(string[] args)
     {
         var containerBuilder = new ContainerBuilder();
         containerBuilder.RegisterType<StringGeneric>().AsImplementedInterfaces().SingleInstance().PreserveExistingDefaults();
