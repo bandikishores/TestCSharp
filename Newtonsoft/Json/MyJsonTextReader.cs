@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Globalization;
 using System.IO;
 using Newtonsoft.Json.Utilities;
@@ -2555,4 +2555,4 @@ namespace Newtonsoft.Json
         /// </value>
         public int LinePosition => _charPos - _lineStartPos;
     }
-}
+}*/

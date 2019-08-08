@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.OData;
 using Microsoft.OData.Edm;
-using Microsoft.AspNet.OData.Builder;
+//using Microsoft.AspNet.OData.Builder;
 
 namespace TestApp
 {
@@ -15,12 +15,13 @@ namespace TestApp
     {
         private static IEdmModel GetEdmModel()
         {
-            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-            builder.EntityType<string>();
+           // ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+         //   builder.EntityType<string>();
             //builder.EntitySet<string>("value");
             //builder.EntitySet<string>("@odata.nextLink");
             
-            return builder.GetEdmModel();
+          //  return builder.GetEdmModel();
+            return null;
         }
 
         public static async Task Main2(string[] args)

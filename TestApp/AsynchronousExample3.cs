@@ -15,6 +15,8 @@ namespace TestApp
     {
         static ThreadLocal<int> threadLocal = new ThreadLocal<int>(() => 1) { Value = 2 };
 
+        static SemaphoreSlim readLock = new SemaphoreSlim(0, 10);
+
         /// <summary>
         /// Constructor to intitialize AzureAdlsProvider
         /// </summary>
@@ -28,7 +30,8 @@ namespace TestApp
             // Console.WriteLine("Returned Value " + AsyncFunc(null).GetAwaiter().GetResult());
             AsyncPump.Run(async delegate
             {
-                await AsyncFunc(null);
+                await AsyncFunc1(null);
+                // Console.WriteLine("After Function Delegate Thread Local Value " + threadLocal + " Thread " + +Thread.CurrentThread.ManagedThreadId);
             });
             Console.WriteLine("Main Program Exited Thread Name " + Thread.CurrentThread.ManagedThreadId);
           //  Console.WriteLine("Value in Thread Local {0} in Main for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
@@ -40,25 +43,42 @@ namespace TestApp
         /// <param name="args">uniquely identifies an extraction</param>
         public static async Task<int> AsyncFunc(string[] args)
         {
-            Console.WriteLine("Value in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine("Enter Async Value in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
             HttpClient client = new HttpClient();
             var t = client.GetAsync("http://www.google.com");
             var currentContext = SynchronizationContext.Current;
 
-            await t.ContinueWith(delegate
+            await t.ContinueWith(httpResponseTask =>
             {
+                Console.WriteLine("Waiting");
                 if (currentContext == null)
                     Console.WriteLine("Null Context");
                 else
-                    currentContext.Post(delegate { Console.WriteLine("Context Available"); }, null);
-
+                    currentContext.Post(delegate
+                    {
+                        Console.WriteLine("Context Available");
+                        Console.WriteLine("Inside Continue with in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
+                    }, null);
+                return 0;
             }, TaskScheduler.Current);//.ConfigureAwait(false);
 
-            Console.WriteLine("Value in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine("Exit Async Value in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
 
             return 0;
         }
 
+        public static async Task AsyncFunc1(string[] args)
+        {
+            Console.WriteLine(AsyncFunc(null).Result);
+            Console.WriteLine("Async Func completion");
+            await Task.Delay(100);
+        }
+
+        private static void ReleaseFunc()
+        {
+            Console.WriteLine("Released Value in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
+            readLock.Release();
+        }
     }
 
     /// <summary>Provides a pump that supports running asynchronous methods on the current thread.</summary>
@@ -95,8 +115,6 @@ namespace TestApp
             /// <summary>The queue of work items.</summary>
             private readonly BlockingCollection<KeyValuePair<SendOrPostCallback, object>> m_queue =
                 new BlockingCollection<KeyValuePair<SendOrPostCallback, object>>();
-            /// <summary>The processing thread.</summary>
-            private readonly Thread m_thread = Thread.CurrentThread;
 
             /// <summary>Dispatches an asynchronous message to the synchronization context.</summary>
             /// <param name="d">The System.Threading.SendOrPostCallback delegate to call.</param>
