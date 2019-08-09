@@ -47,7 +47,8 @@ namespace TestApp
             var t = new HttpClient().GetAsync("http://www.google.com");
 
             Console.WriteLine("Did some Heavy Operation, Going to await on previous result");
-            await t.ConfigureAwait(false);
+            await t;//.ConfigureAwait(false);
+            // Kish -TODO : Uncomment above code to remove deadlock
 
             Console.WriteLine("Exit Async Value in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
             return 0;
