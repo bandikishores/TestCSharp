@@ -44,26 +44,12 @@ namespace TestApp
         public static async Task<int> AsyncFunc(string[] args)
         {
             Console.WriteLine("Enter Async Value in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
-            HttpClient client = new HttpClient();
-            var t = client.GetAsync("http://www.google.com");
-            var currentContext = SynchronizationContext.Current;
+            var t = new HttpClient().GetAsync("http://www.google.com");
 
-            await t.ContinueWith(httpResponseTask =>
-            {
-                Console.WriteLine("Waiting");
-                if (currentContext == null)
-                    Console.WriteLine("Null Context");
-                else
-                    currentContext.Post(delegate
-                    {
-                        Console.WriteLine("Context Available");
-                        Console.WriteLine("Inside Continue with in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
-                    }, null);
-                return 0;
-            }, TaskScheduler.Current);//.ConfigureAwait(false);
+            Console.WriteLine("Did some Heavy Operation, Going to await on previous result");
+            await t.ConfigureAwait(false);
 
             Console.WriteLine("Exit Async Value in Thread Local {0} for Thread {1}", threadLocal, Thread.CurrentThread.ManagedThreadId);
-
             return 0;
         }
 
